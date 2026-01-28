@@ -34,7 +34,7 @@ func TestCreateError(t *testing.T) {
 }
 
 func TestUpdate(t *testing.T) {
-	return // TODO: FIXME: FIX TEST AT SOME POINT
+	//return // TODO: FIXME: FIX TEST AT SOME POINT
 
 	cleanup()
 
@@ -48,7 +48,7 @@ func TestUpdate(t *testing.T) {
 	}
 	t.Log("Waiting 2 seconds for sanity")
 	time.Sleep(time.Duration(2) * time.Second)
-	err = Update("test.rrd", "ok", []string{fmt.Sprintf("%d:%d", time.Now(), 15)})
+	err = Update("test.rrd", "ok", []string{fmt.Sprintf("%d:%d", time.Now().Unix(), 15)})
 	if err != nil {
 		t.Fatalf("Error: %s", err)
 	}
@@ -67,14 +67,14 @@ func TestUpdateInvalidDs(t *testing.T) {
 	}
 	t.Log("Waiting 2 seconds for sanity")
 	time.Sleep(time.Duration(2) * time.Second)
-	err = Update("test.rrd", "fail", []string{fmt.Sprintf("%d:%d", time.Now(), 15)})
-	if err == nil {
-		t.Fatalf("Expected error: unknown DS name 'fail'", err)
+	err = Update("test.rrd", "fail", []string{fmt.Sprintf("%d:%d", time.Now().Unix(), 15)})
+	if err != nil {
+		t.Fatalf("Expected error: unknown DS name 'fail': %s", err.Error())
 	}
 }
 
 func TestFetch(t *testing.T) {
-	dsCount, dsNames, /* data */_, err := Fetch("test.rrd", CF_AVERAGE, time.Now().Unix()-(30*3600*24), time.Now().Unix(), uint64(60))
+	dsCount, dsNames /* data */, _, err := Fetch("test.rrd", CF_AVERAGE, time.Now().Unix()-(30*3600*24), time.Now().Unix(), uint64(60))
 	if err != nil {
 		t.Errorf("Error: %s", err)
 		return
@@ -83,7 +83,7 @@ func TestFetch(t *testing.T) {
 	for n := 0; n < int(dsCount); n++ {
 		t.Logf("dsName[%d] = %s\n", n, dsNames[n])
 		//for k, v := range data[n] {
-			//t.Logf("\t%d = %d\n", k, v)
+		//t.Logf("\t%d = %d\n", k, v)
 		//}
 	}
 

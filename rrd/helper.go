@@ -33,22 +33,15 @@ func dsToString(dsType DsType) (string, error) {
 	switch dsType {
 	case DS_GAUGE:
 		return "GAUGE", nil
-		break
 	case DS_COUNTER:
 		return "COUNTER", nil
-		break
 	case DS_DERIVE:
 		return "DERIVE", nil
-		break
 	case DS_ABSOLUTE:
 		return "ABSOLUTE", nil
-		break
 	case DS_COMPUTE:
 		return "COMPUTE", nil
-		break
 	default:
 		return "", errors.New("Invalid DS type")
-		break
 	}
-	return "", errors.New("Invalid DS type")
 }
